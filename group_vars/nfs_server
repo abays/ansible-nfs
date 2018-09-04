@@ -1,0 +1,16 @@
+---
+whom: root
+unmount: false
+disk_devices_with_paths:
+  - device: /dev/sdb
+    part: 1
+    path: /nfs
+  - device: /dev/sdc
+    part: 1
+    path: /nfs2
+nfs_dirs_with_clients:
+  /nfs:
+    - 10.19.110.3
+    - 10.19.110.5
+  /nfs2:
+    - 10.19.110.15

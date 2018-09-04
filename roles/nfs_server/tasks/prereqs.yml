@@ -1,0 +1,11 @@
+---
+- name: install dependencies
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - xfsprogs
+    - nfs-utils
+    - firewalld
+    - libselinux-python
+  become: true

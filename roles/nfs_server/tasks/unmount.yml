@@ -1,0 +1,25 @@
+---
+- name: disable and stop nfs-server
+  systemd:
+    state: stopped
+    enabled: no
+    name: nfs-server
+  become: true
+
+- name: unmount devices
+  mount:
+    path: "{{ item.path }}"
+    src: "{{ item.device }}{{ item.part }}"
+    fstype: xfs
+    state: unmounted
+  become: true
+  with_items: "{{ disk_devices_with_paths }}"
+
+- name: unmount devices, again
+  mount:
+    path: "{{ item.path }}"
+    src: "{{ item.device }}{{ item.part }}"
+    fstype: xfs
+    state: absent
+  become: true
+  with_items: "{{ disk_devices_with_paths }}"

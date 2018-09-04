@@ -1,0 +1,30 @@
+---
+- name: wipe disk partitions
+  parted:
+    device: "{{ item.device }}"
+    number: "{{ item.part }}"
+    state: absent
+  become: true
+  with_items: "{{ disk_devices_with_paths }}"
+
+- name: create disk partitions
+  parted:
+    device: "{{ item.device }}"
+    number: "{{ item.part }}"
+    state: present
+  become: true
+  with_items: "{{ disk_devices_with_paths }}"
+
+- name: unmount devices, in case parted mounted them
+  mount:
+    path: "{{ item.path }}"
+    src: "{{ item.device }}{{ item.part }}"
+    fstype: xfs
+    state: unmounted
+  become: true
+  with_items: "{{ disk_devices_with_paths }}"
+
+- name: format disk partition as xfs
+  command: mkfs.xfs -f {{ item.device }}{{ item.part }}
+  become: true
+  with_items: "{{ disk_devices_with_paths }}"

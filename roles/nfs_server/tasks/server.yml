@@ -1,0 +1,31 @@
+---
+- name: enable and start firewalld
+  systemd:
+    state: restarted
+    enabled: yes
+    name: firewalld
+  become: true
+
+- name: open firewall for nfs tcp ports
+  command: firewall-cmd --zone=public --add-port={{ item }}/tcp --permanent
+  with_items:
+    - 111
+    - 2049
+  become: true
+
+- name: open firewall for nfs udp ports
+  command: firewall-cmd --zone=public --add-port={{ item }}/udp --permanent
+  with_items:
+    - 111
+  become: true
+
+- name: reload firewall
+  command: firewall-cmd --reload
+  become: true
+
+- name: enable and start nfs-server
+  systemd:
+    state: restarted
+    enabled: yes
+    name: nfs-server
+  become: true

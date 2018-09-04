@@ -1,0 +1,8 @@
+---
+# Sets up a network file share
+- name: install and configure NFS server
+  hosts: nfs_server
+  remote_user: '{{ whom }}'
+
+  roles:
+    - nfs_server

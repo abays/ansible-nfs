@@ -1,0 +1,11 @@
+---
+- include: prereqs.yml
+- include: exports.yml
+  when: unmount == false
+- include: unmount.yml
+- include: partition.yml
+  when: unmount == false
+- include: mount.yml
+  when: unmount == false
+- include: server.yml
+  when: unmount == false

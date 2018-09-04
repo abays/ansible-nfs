@@ -1,0 +1,9 @@
+---
+- name: mount devices as xfs
+  mount:
+    path: "{{ item.path }}"
+    src: "{{ item.device }}{{ item.part }}"
+    fstype: xfs
+    state: mounted
+  become: true
+  with_items: "{{ disk_devices_with_paths }}"
