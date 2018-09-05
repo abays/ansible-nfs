@@ -1,4 +1,4 @@
-# ansible-nfs
+# nfs-ansible
 Ansible playbook to install and configure NFS server
 
 Install / configure NFS:
