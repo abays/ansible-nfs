@@ -15,6 +15,14 @@
   become: true
   with_items: "{{ disk_devices_with_paths }}"
 
+- name: wiped devices (if requested)
+  file:
+    state: absent
+    path: "{{ item.path }}"
+  become: true
+  with_items: "{{ disk_devices_with_paths }}"
+  when: wipe_before_unmount == true
+
 - name: unmount devices, again
   mount:
     path: "{{ item.path }}"
